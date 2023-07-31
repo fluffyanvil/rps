@@ -10,6 +10,8 @@ public class GameDbInMemoryContext : DbContext
     /// </summary>
     public DbSet<Game> Games { get; set; }
 
+    public DbSet<UserInGame> UsersInGames { get; set; }
+
     protected override void OnConfiguring
         (DbContextOptionsBuilder optionsBuilder)
     {

@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using RockPaperScissors.WebApi.Dto;
 
 namespace RockPaperScissors.WebApi.Mediatr.Commands.JoinUserToGameRequest;
 
-public class JoinUserToGameRequest : IRequest<JoinUserToGameResponse>
+public class JoinUserToGameRequest : IRequest<GameDto>
 {
     public Guid GameId { get; set; }
 

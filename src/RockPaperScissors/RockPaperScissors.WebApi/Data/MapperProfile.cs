@@ -8,6 +8,7 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<Game, GameDto>();
+        CreateMap<Game, GameDto>()
+            .ForMember(d => d.Users, opt => opt.MapFrom(s => s.UsersInGame.Select(u => u.UserName).ToArray()));
     }
 }
