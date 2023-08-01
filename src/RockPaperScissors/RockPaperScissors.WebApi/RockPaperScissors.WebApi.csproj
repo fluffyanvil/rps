@@ -18,7 +18,8 @@
 
   <ItemGroup>
     <Folder Include="Data\Models\" />
-    <Folder Include="Mediatr\Queries\" />
+    <Folder Include="Mediatr\Commands\TurnToGameRequest\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

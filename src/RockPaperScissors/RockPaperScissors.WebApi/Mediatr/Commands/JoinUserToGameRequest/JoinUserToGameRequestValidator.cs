@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using RockPaperScissors.WebApi.Data;
 
 namespace RockPaperScissors.WebApi.Mediatr.Commands.JoinUserToGameRequest;

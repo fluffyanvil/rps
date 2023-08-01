@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using RockPaperScissors.WebApi.Data;
+using RockPaperScissors.WebApi.Mediatr.Commands.TurnToGameRequest;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace RockPaperScissors.WebApi
@@ -44,9 +45,9 @@ namespace RockPaperScissors.WebApi
             services.AddMvc();
             services.AddControllers();
             services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(Startup).Assembly));
-            services.AddFluentValidation(new[] { typeof(Startup).Assembly });
+            services.AddFluentValidation(new[] { typeof(Startup).Assembly, typeof(TurnToGameRequestValidator).Assembly });
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddValidatorsFromAssemblyContaining(typeof(Startup));
+            //services.AddValidatorsFromAssemblyContaining<GetStatisticsRequestValidator>();
             services.AddProblemDetails();
 
             services

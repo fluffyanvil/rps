@@ -1,7 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RockPaperScissors.WebApi.Data.Enums;
 using RockPaperScissors.WebApi.Mediatr.Commands.CreateNewGameCommand;
 using RockPaperScissors.WebApi.Mediatr.Commands.JoinUserToGameRequest;
+using RockPaperScissors.WebApi.Mediatr.Commands.TurnToGameRequest;
+using RockPaperScissors.WebApi.Mediatr.Queries.GetStatisticsRequest;
 
 namespace RockPaperScissors.WebApi.Controllers;
 
@@ -20,9 +23,9 @@ public class GamesController : ControllerBase
     }
 
     [HttpPut("{gameId:guid}/join/{userName}")]
-    public async Task<IActionResult> JoinAsync(Guid gameId, string userName)
+    public async Task<IActionResult> JoinAsync(Guid gameId, string userName, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new JoinUserToGameRequest { GameId = gameId, UserName = userName });
+        var result = await _mediator.Send(new JoinUserToGameRequest { GameId = gameId, UserName = userName }, cancellationToken);
         return Ok(result);
     }
 
@@ -31,5 +34,19 @@ public class GamesController : ControllerBase
     {
         var result = await _mediator.Send(new CreateNewGameRequest{ Creator = userName}, cancellationToken);
         return Ok(result);
-    } 
+    }
+
+    [HttpPost("{gameId:guid}/user/{userName}/{option}")]
+    public async Task<IActionResult> TurnAsync(Guid gameId, Option option, string userName, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new TurnToGameRequest { GameId = gameId, Option = option, UserName = userName }, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("{gameId:guid}/stat")]
+    public async Task<IActionResult> StatAsync(Guid gameId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetStatisticsRequest { GameId = gameId }, cancellationToken);
+        return Ok(result);
+    }
 }

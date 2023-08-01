@@ -5,15 +5,14 @@ namespace RockPaperScissors.WebApi.Data.Models;
 /// <summary>
 /// Игра.
 /// </summary>
-public class Game
+public class Game : BaseEntity
 {
-    [Key]
-    public Guid Id { get; set; }
-
     /// <summary>
     /// Пользователь, создавший игру.
     /// </summary>
     public string Creator { get; set; }
 
     public virtual List<UserInGame> UsersInGame { get; set; }
+
+    public virtual List<Turn> Turns { get; set; }
 }

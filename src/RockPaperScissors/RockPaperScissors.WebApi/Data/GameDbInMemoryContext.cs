@@ -12,6 +12,8 @@ public class GameDbInMemoryContext : DbContext
 
     public DbSet<UserInGame> UsersInGames { get; set; }
 
+    public DbSet<Turn> Turns { get; set; }
+
     protected override void OnConfiguring
         (DbContextOptionsBuilder optionsBuilder)
     {

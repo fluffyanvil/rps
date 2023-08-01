@@ -10,5 +10,7 @@ public class MapperProfile : Profile
     {
         CreateMap<Game, GameDto>()
             .ForMember(d => d.Users, opt => opt.MapFrom(s => s.UsersInGame.Select(u => u.UserName).ToArray()));
+
+        CreateMap<Turn, TurnDto>();
     }
 }
