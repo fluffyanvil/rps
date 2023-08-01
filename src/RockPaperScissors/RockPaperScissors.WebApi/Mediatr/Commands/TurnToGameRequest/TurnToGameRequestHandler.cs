@@ -26,16 +26,25 @@ public class TurnToGameRequestHandler : IRequestHandler<TurnToGameRequest, TurnD
             new Turn { GameId = request.GameId, Option = Enum.Parse<Option>(request.Option), UserId = request.UserId },
             cancellationToken);
 
+        var game = await _context.Games.Include(g => g.Turns).FirstAsync(g => g.Id.Equals(request.GameId), cancellationToken);
+
+        var result = _mapper.Map<TurnDto>(entity.Entity);
+
+        if (game.PlayWithCpu)
+        {
+            
+            await _context.Turns.AddAsync(
+                new Turn { GameId = request.GameId, Option = (Option)Random.Shared.Next(1, 3), UserId = game.CpuId },
+                cancellationToken);
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
 
-        var game = await _context.Games.Include(g => g.Turns).FirstAsync(g => g.Id.Equals(request.GameId), cancellationToken);
-        
         if (game.Turns.Count == 10)
         {
             await _mediator.Send(new CompleteGameRequest.CompleteGameRequest { GameId = request.GameId }, cancellationToken);
         }
 
-        var result = _mapper.Map<TurnDto>(entity.Entity);
         return result;
     }
 }

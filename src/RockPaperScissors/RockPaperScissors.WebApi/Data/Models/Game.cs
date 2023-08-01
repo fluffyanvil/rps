@@ -19,4 +19,6 @@ public class Game : BaseEntity
     public bool IsCompleted { get; set; }
 
     public bool PlayWithCpu { get; set; }
+
+    public Guid CpuId { get; set; }
 }

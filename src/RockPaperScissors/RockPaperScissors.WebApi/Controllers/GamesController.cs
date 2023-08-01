@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RockPaperScissors.WebApi.Mediatr.Commands.CompleteGameRequest;
 using RockPaperScissors.WebApi.Mediatr.Commands.CreateNewGameCommand;
 using RockPaperScissors.WebApi.Mediatr.Commands.JoinUserToGameRequest;
+using RockPaperScissors.WebApi.Mediatr.Commands.PlayWithCpuRequest;
 using RockPaperScissors.WebApi.Mediatr.Commands.TurnToGameRequest;
 using RockPaperScissors.WebApi.Mediatr.Queries.GetStatisticsRequest;
 
@@ -54,6 +55,13 @@ public class GamesController : ControllerBase
     public async Task<IActionResult> CompleteAsync(Guid gameId, CancellationToken cancellationToken)
     {
         await _mediator.Send(new CompleteGameRequest { GameId = gameId}, cancellationToken);
+        return Ok();
+    }
+
+    [HttpPost("{gameId:guid}/playWithCpu")]
+    public async Task<IActionResult> PlayWithCpuAsync(Guid gameId, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new PlayWithCpuRequest { GameId = gameId }, cancellationToken);
         return Ok();
     }
 }

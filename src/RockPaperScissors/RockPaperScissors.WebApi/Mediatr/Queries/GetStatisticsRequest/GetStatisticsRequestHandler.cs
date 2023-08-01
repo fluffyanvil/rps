@@ -25,7 +25,7 @@ public class GetStatisticsRequestHandler : IRequestHandler<GetStatisticsRequest,
 
         var rounds = new List<RoundDto>();
         
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < rounds.Count - (rounds.Count % 2); i++)
         {
             var roundTurns = _mapper.Map<List<TurnDto>>(turns.Skip(i * 2).Take(2).ToList());
             var round = new RoundDto{Number = i+1, Turn1 = roundTurns[0], Turn2 = roundTurns[1] };
