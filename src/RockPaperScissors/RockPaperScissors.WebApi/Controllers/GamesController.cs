@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RockPaperScissors.WebApi.Data.Enums;
+using RockPaperScissors.WebApi.Mediatr.Commands.CompleteGameRequest;
 using RockPaperScissors.WebApi.Mediatr.Commands.CreateNewGameCommand;
 using RockPaperScissors.WebApi.Mediatr.Commands.JoinUserToGameRequest;
 using RockPaperScissors.WebApi.Mediatr.Commands.TurnToGameRequest;
@@ -37,7 +37,7 @@ public class GamesController : ControllerBase
     }
 
     [HttpPost("{gameId:guid}/user/{userId}/{option}")]
-    public async Task<IActionResult> TurnAsync(Guid gameId, Option option, Guid userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> TurnAsync(Guid gameId, string option, Guid userId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new TurnToGameRequest { GameId = gameId, Option = option, UserId = userId }, cancellationToken);
         return Ok(result);
@@ -48,5 +48,12 @@ public class GamesController : ControllerBase
     {
         var result = await _mediator.Send(new GetStatisticsRequest { GameId = gameId }, cancellationToken);
         return Ok(result);
+    }
+
+    [HttpPost("{gameId:guid}/complete")]
+    public async Task<IActionResult> CompleteAsync(Guid gameId, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new CompleteGameRequest { GameId = gameId}, cancellationToken);
+        return Ok();
     }
 }

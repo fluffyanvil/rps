@@ -10,5 +10,5 @@ public class TurnToGameRequest : IRequest<TurnDto>
 
     public Guid UserId { get; set; }
 
-    public Option Option { get; set; }
+    public string Option { get; set; }
 }

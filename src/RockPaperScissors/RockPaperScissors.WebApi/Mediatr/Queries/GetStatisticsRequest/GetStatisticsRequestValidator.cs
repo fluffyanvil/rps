@@ -22,8 +22,8 @@ public class GetStatisticsRequestValidator : AbstractValidator<GetStatisticsRequ
         RuleFor(req => req)
             .Must(req =>
             {
-                var game = _context.Games.Include(g => g.Turns).First(g => g.Id.Equals(req.GameId));
-                return game.Turns.Count == 10;
+                var game = _context.Games.First(g => g.Id.Equals(req.GameId));
+                return game.IsCompleted;
             })
             .WithMessage(r => $"Игры {r.GameId} еще не завершилась.");
     }

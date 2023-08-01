@@ -15,4 +15,8 @@ public class Game : BaseEntity
     public virtual List<UserInGame> UsersInGame { get; set; }
 
     public virtual List<Turn> Turns { get; set; }
+
+    public bool IsCompleted { get; set; }
+
+    public bool PlayWithCpu { get; set; }
 }

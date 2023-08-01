@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using RockPaperScissors.WebApi.Data;
+using RockPaperScissors.WebApi.Data.Enums;
+using System;
 
 namespace RockPaperScissors.WebApi.Mediatr.Commands.TurnToGameRequest;
 
@@ -65,5 +67,9 @@ public class TurnToGameRequestValidator : AbstractValidator<TurnToGameRequest>
                 return lastTurn.UserId.Equals(otherPlayer.UserId);
             })
             .WithMessage(r => $"Дождитесь хода другого игрока.");
+
+        RuleFor(req => req.Option)
+            .Must(o => Enum.TryParse<Option>(o, false, out var result)  && Enum.IsDefined(typeof(Option), result))
+            .WithMessage(request => $"Недопустимый ход: {request.Option}");
     }
 }
