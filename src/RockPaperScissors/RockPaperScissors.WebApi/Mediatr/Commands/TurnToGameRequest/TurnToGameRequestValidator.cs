@@ -22,11 +22,11 @@ public class TurnToGameRequestValidator : AbstractValidator<TurnToGameRequest>
             .Must(r =>
             {
                 var exists = _context.UsersInGames.Any(g =>
-                    g.GameId.Equals(r.GameId) && g.UserName.ToLower().Equals(r.UserName.ToLower()));
+                    g.GameId.Equals(r.GameId) && g.UserId.Equals(r.UserId));
 
                 return exists;
             })
-            .WithMessage(r => $"Пользователь {r.UserName} не существует в игре {r.GameId}.");
+            .WithMessage(r => $"Пользователь {r.UserId} не существует в игре {r.GameId}.");
 
         RuleFor(r => r)
             .Must(r =>
@@ -60,9 +60,9 @@ public class TurnToGameRequestValidator : AbstractValidator<TurnToGameRequest>
 
                 if (lastTurn == null) return true;
 
-                var otherPlayer = game.UsersInGame.First(u => !u.UserName.ToLower().Equals(req.UserName.ToLower()));
+                var otherPlayer = game.UsersInGame.First(u => !u.UserId.Equals(req.UserId));
 
-                return lastTurn.UserName.ToLower().Equals(otherPlayer.UserName.ToLower());
+                return lastTurn.UserId.Equals(otherPlayer.UserId);
             })
             .WithMessage(r => $"Дождитесь хода другого игрока.");
     }

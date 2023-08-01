@@ -2,12 +2,5 @@
 
 public class JoinUserToGameResponse
 {
-    public JoinUserToGameResponse(string[] users)
-    {
-        Users = users;
-    }
-
-    public Guid GameId { get; set; }
-
-    public string[] Users { get; set; }
+    public Guid UserId { get; set; }
 }

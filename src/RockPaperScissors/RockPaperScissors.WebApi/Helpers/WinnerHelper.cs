@@ -7,7 +7,7 @@ public static class WinnerHelper
 {
     public static string RoundWinner(TurnDto turn1, TurnDto turn2)
     {
-        return Beat(turn1.Option, turn2.Option) == Result.Win ? turn1.UserName : Beat(turn1.Option, turn2.Option) == Result.Draw ? "-" : turn2.UserName;
+        return Beat(turn1.Option, turn2.Option) == Result.Win ? turn1.UserName : Beat(turn1.Option, turn2.Option) == Result.Draw ? "None" : turn2.UserName;
     }
 
     private static Result Beat(Option option1, Option option2)

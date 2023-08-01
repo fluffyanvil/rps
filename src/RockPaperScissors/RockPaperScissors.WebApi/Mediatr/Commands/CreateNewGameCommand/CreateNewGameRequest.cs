@@ -3,10 +3,10 @@ using RockPaperScissors.WebApi.Dto;
 
 namespace RockPaperScissors.WebApi.Mediatr.Commands.CreateNewGameCommand;
 
-public class CreateNewGameRequest : IRequest<GameDto>
+public class CreateNewGameRequest : IRequest<CreateNewGameResponse>
 {
     /// <summary>
     /// Пользователь, создающий игру
     /// </summary>
-    public string? Creator { get; set; }
+    public string? Name { get; set; }
 }

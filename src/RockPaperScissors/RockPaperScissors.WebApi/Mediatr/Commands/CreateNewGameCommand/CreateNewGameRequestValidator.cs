@@ -6,7 +6,7 @@ public class CreateNewGameRequestValidator : AbstractValidator<CreateNewGameRequ
 {
     public CreateNewGameRequestValidator()
     {
-        RuleFor(r => r.Creator)
+        RuleFor(r => r.Name)
             .NotEmpty()
             .WithMessage("Имя создателя не должно быть пустым.");
     }

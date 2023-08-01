@@ -7,7 +7,7 @@ using RockPaperScissors.WebApi.Dto;
 
 namespace RockPaperScissors.WebApi.Mediatr.Commands.JoinUserToGameRequest;
 
-public class JoinUserToGameRequestHandler : IRequestHandler<JoinUserToGameRequest, GameDto>
+public class JoinUserToGameRequestHandler : IRequestHandler<JoinUserToGameRequest, JoinUserToGameResponse>
 {
     private readonly GameDbInMemoryContext _context;
     private readonly IMapper _mapper;
@@ -17,15 +17,12 @@ public class JoinUserToGameRequestHandler : IRequestHandler<JoinUserToGameReques
         _context = context;
         _mapper = mapper;
     }
-    public async Task<GameDto> Handle(JoinUserToGameRequest request, CancellationToken cancellationToken)
+    public async Task<JoinUserToGameResponse> Handle(JoinUserToGameRequest request, CancellationToken cancellationToken)
     {
-        await _context.UsersInGames.AddAsync(new UserInGame { GameId = request.GameId, UserName = request.UserName }, cancellationToken);
+        var entity = await _context.UsersInGames.AddAsync(new UserInGame { GameId = request.GameId, UserName = request.UserName }, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var game = await _context.Games.Include(g => g.UsersInGame)
-            .FirstOrDefaultAsync(g => g.Id.Equals(request.GameId), cancellationToken);
-
-        var result = _mapper.Map<GameDto>(game);
+        var result = _mapper.Map<JoinUserToGameResponse>(entity.Entity);
 
         return result;
     }

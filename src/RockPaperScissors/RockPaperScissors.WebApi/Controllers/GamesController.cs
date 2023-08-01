@@ -32,14 +32,14 @@ public class GamesController : ControllerBase
     [HttpPost("create/{userName}")]
     public async Task<IActionResult> PostAsync(string userName, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CreateNewGameRequest{ Creator = userName}, cancellationToken);
+        var result = await _mediator.Send(new CreateNewGameRequest{ Name = userName}, cancellationToken);
         return Ok(result);
     }
 
-    [HttpPost("{gameId:guid}/user/{userName}/{option}")]
-    public async Task<IActionResult> TurnAsync(Guid gameId, Option option, string userName, CancellationToken cancellationToken)
+    [HttpPost("{gameId:guid}/user/{userId}/{option}")]
+    public async Task<IActionResult> TurnAsync(Guid gameId, Option option, Guid userId, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new TurnToGameRequest { GameId = gameId, Option = option, UserName = userName }, cancellationToken);
+        var result = await _mediator.Send(new TurnToGameRequest { GameId = gameId, Option = option, UserId = userId }, cancellationToken);
         return Ok(result);
     }
 

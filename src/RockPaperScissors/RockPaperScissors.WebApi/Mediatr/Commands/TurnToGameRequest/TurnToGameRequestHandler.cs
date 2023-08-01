@@ -19,12 +19,8 @@ public class TurnToGameRequestHandler : IRequestHandler<TurnToGameRequest, TurnD
     }
     public async Task<TurnDto> Handle(TurnToGameRequest request, CancellationToken cancellationToken)
     {
-
-        var lastTurn = await _context.Turns.Where(t => t.GameId.Equals(request.GameId)).OrderByDescending(t => t.CreatedAt)
-            .FirstOrDefaultAsync(cancellationToken);
-
         var entity = await _context.Turns.AddAsync(
-            new Turn { GameId = request.GameId, Option = request.Option, UserName = request.UserName },
+            new Turn { GameId = request.GameId, Option = request.Option, UserId = request.UserId },
             cancellationToken);
 
         await _context.SaveChangesAsync(cancellationToken);
